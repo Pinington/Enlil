@@ -1,8 +1,7 @@
-#include <iostream>
+#include "application/Application.h"
 
-using namespace std;
-
-int main() {
-    cout << "Hello";
-    return 0;
+int main(int argc, char *argv[])
+{
+    Application app;
+    return app.run(argc, argv);
 }
