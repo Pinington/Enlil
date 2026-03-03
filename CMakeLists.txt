@@ -15,7 +15,7 @@ add_executable(enlil
     ${SOURCES}
 )
 
-# Include headers (if you use include/)
+# Include headers
 target_include_directories(enlil PRIVATE
     ${CMAKE_SOURCE_DIR}/include
 )
