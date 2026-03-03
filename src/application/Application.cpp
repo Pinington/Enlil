@@ -1,3 +1,6 @@
+#include <QApplication>
+#include <QMainWindow>
+
 #include "application/Application.h"
 
 int Application::run(int argc, char *argv[])
