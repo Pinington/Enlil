@@ -61,4 +61,5 @@ Application --> core.System
 physics.Engine --> core.System
 graphics.Renderer --> core.System
 graphics.Renderer --> core.Particle
+graphics.Renderer -- graphics.Menu
 @enduml
