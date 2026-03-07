@@ -7,8 +7,8 @@ void Renderer::initializeGL()
     glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
     
     m_program = new QOpenGLShaderProgram(this);
-    m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/src/graphics/shaders/triangle.vert");
-    m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/src/graphics/shaders/triangle.frag");
+    m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/src/graphics/shaders/vertex.glsl");
+    m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/src/graphics/shaders/fragment.glsl");
     m_program->link();
     m_posAttr = m_program->attributeLocation("posAttr");
     m_colAttr = m_program->attributeLocation("colAttr");
@@ -29,15 +29,15 @@ void Renderer::paintGL()
     glClear(GL_COLOR_BUFFER_BIT);
 
     QMatrix4x4 matrix;
-    matrix.perspective(60.0f, 4.0f/3.0f, 0.1f, 100.0f);
+    matrix.perspective(60.0f, float(width()) / float(height()), 0.1f, 100.0f);
     matrix.translate(0, 0, -2);
 
     m_program->setUniformValue(m_matrixUniform, matrix);
 
     GLfloat vertices[] = {
         0.0f, 0.707f, 0.0f,
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f
+        -0.707f, -0.5f, 0.0f,
+        0.707f, -0.5f, 0.0f
     };
 
     GLfloat colors[] = {

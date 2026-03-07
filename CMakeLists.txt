@@ -17,8 +17,8 @@ add_executable(enlil
 qt_add_resources(enlil
     PREFIX "/"
     FILES
-        src/graphics/shaders/triangle.vert
-        src/graphics/shaders/triangle.frag
+        src/graphics/shaders/vertex.glsl
+        src/graphics/shaders/fragment.glsl
 )
 
 target_include_directories(enlil PRIVATE
