@@ -11,3 +11,9 @@
 
  - Choose wether to switch back to Make and gcc  
  - Document the code  
+
+
+ # TO SOLVE List
+ - Should the Menu be with application or graphics  
+ - Do I render dt or full system everytime
+ - VBO and VAO 
