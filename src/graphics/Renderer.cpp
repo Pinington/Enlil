@@ -68,9 +68,9 @@ void Renderer::drawSphere(Point center, float radius) {
         col.push_back(0.43);
         col.push_back(0.12);
 
-        normals.push_back(p.x / radius);
-        normals.push_back(p.y / radius);
-        normals.push_back(p.z / radius);
+        normals.push_back(p.x);
+        normals.push_back(p.y);
+        normals.push_back(p.z);
     };
     
     int uRes = 32;
