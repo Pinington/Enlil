@@ -37,10 +37,10 @@ void Renderer::paintGL()
     m_program->setUniformValue(m_matrixUniform, cam.getMatrix());
 
     Point center = {-0.5f, 0.0f, 0.0f};
-    drawCircle(center, 0.5f);
+    drawSphere(center, 0.5f);
 
     Point center2 = {0.5f, 0.0f, -0.2f};
-    drawCircle(center2, 0.3f);
+    drawSphere(center2, 0.3f);
 
     m_program->release();
 }
@@ -54,7 +54,7 @@ Point evalSphere(float u, float v, float r) {
     return p;
 }
 
-void Renderer::drawCircle(Point center, float radius) {
+void Renderer::drawSphere(Point center, float radius) {
     std::vector<GLfloat> pos;
     std::vector<GLfloat> col;
     std::vector<GLfloat> normals;

@@ -18,12 +18,12 @@ class Renderer : public QOpenGLWidget, protected QOpenGLFunctions
 {
 public:
     explicit Renderer(QWidget *parent = nullptr) : QOpenGLWidget(parent), cam(float(800)/float(600)) {};
+    void drawSphere(Point center, float radius);
 
 protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
-    void drawCircle(Point center, float radius);
     Camera cam;
     GLuint m_posAttr;
     GLuint m_colAttr;
