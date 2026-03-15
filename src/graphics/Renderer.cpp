@@ -13,10 +13,30 @@ void Renderer::initializeGL()
     m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/src/graphics/shaders/vertex.glsl");
     m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/src/graphics/shaders/fragment.glsl");
     m_program->link();
+    
     m_posAttr = m_program->attributeLocation("posAttr");
     m_colAttr = m_program->attributeLocation("colAttr");
     m_normAttr = m_program->attributeLocation("normalAttr");
     m_matrixUniform = m_program->uniformLocation("matrix");
+
+    glGenVertexArrays(1, &this->VAO);
+    glGenBuffers(1, &this->VBO);
+    glGenBuffers(1, &this->EBO);
+
+    Point center = {-0.5f, 0.0f, 0.0f};
+    drawSphere(center, 0.5f);
+
+    Point center2 = {0.5f, 0.0f, -0.2f};
+    drawSphere(center2, 0.3f);
+
+    glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)0);
+    glEnableVertexAttribArray(m_posAttr);
+    
+    glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (3 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(m_colAttr);
+    
+    glVertexAttribPointer(m_normAttr, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (6 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(m_normAttr);
 
     m_program->release();
 }
@@ -33,14 +53,10 @@ void Renderer::paintGL()
     m_program->bind();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
     m_program->setUniformValue(m_matrixUniform, cam.getMatrix());
 
-    Point center = {-0.5f, 0.0f, 0.0f};
-    drawSphere(center, 0.5f);
-
-    Point center2 = {0.5f, 0.0f, -0.2f};
-    drawSphere(center2, 0.3f);
+    glBindVertexArray(this->VAO);
+    glDrawElements(GL_TRIANGLES, idx.size(), GL_UNSIGNED_INT, 0);
 
     m_program->release();
 }
@@ -55,22 +71,19 @@ Point evalSphere(float u, float v, float r) {
 }
 
 void Renderer::drawSphere(Point center, float radius) {
-    std::vector<GLfloat> pos;
-    std::vector<GLfloat> col;
-    std::vector<GLfloat> normals;
     
     auto addVertex = [&](Point p) {
-        pos.push_back(p.x + center.x);
-        pos.push_back(p.y + center.y);
-        pos.push_back(p.z + center.z);
+        arr.push_back(p.x + center.x);
+        arr.push_back(p.y + center.y);
+        arr.push_back(p.z + center.z);
 
-        col.push_back(0.14);
-        col.push_back(0.43);
-        col.push_back(0.12);
+        arr.push_back(0.14);
+        arr.push_back(0.43);
+        arr.push_back(0.12);
 
-        normals.push_back(p.x);
-        normals.push_back(p.y);
-        normals.push_back(p.z);
+        arr.push_back(p.x);
+        arr.push_back(p.y);
+        arr.push_back(p.z);
     };
     
     int uRes = 32;
@@ -81,6 +94,7 @@ void Renderer::drawSphere(Point center, float radius) {
     float uStep = (uEnd) / uRes;
     float vStep = (vEnd) / vRes;
 
+    int c = arr.size() / 9; 
     for (int u = 0; u < uRes; u++) {
         for (int v = 0; v < vRes; v++) {
             float lng = u * uStep;
@@ -97,24 +111,26 @@ void Renderer::drawSphere(Point center, float radius) {
             addVertex(p0);
             addVertex(p1);
             addVertex(p2);
-
-            addVertex(p1);
-            addVertex(p2);
             addVertex(p3);
+            
+            this->idx.push_back(c + 0);
+            this->idx.push_back(c + 1);
+            this->idx.push_back(c + 2);
+
+            this->idx.push_back(c + 1);
+            this->idx.push_back(c + 2);
+            this->idx.push_back(c + 3);
+            c += 4;
         }
     }
 
-    glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, pos.data());
-    glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, col.data());
-    glVertexAttribPointer(m_normAttr, 3, GL_FLOAT, GL_FALSE, 0, normals.data());
+    this->vertexCount = arr.size() / 9;
 
-    glEnableVertexAttribArray(m_posAttr);
-    glEnableVertexAttribArray(m_colAttr);
-    glEnableVertexAttribArray(m_normAttr);
+    glBindVertexArray(this->VAO);
 
-    glDrawArrays(GL_TRIANGLES, 0, pos.size()/3);
+    glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * arr.size(), arr.data(), GL_STATIC_DRAW);
 
-    glDisableVertexAttribArray(m_normAttr);
-    glDisableVertexAttribArray(m_colAttr);
-    glDisableVertexAttribArray(m_posAttr);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, idx.size() * sizeof(GLuint), idx.data(), GL_STATIC_DRAW);
 }

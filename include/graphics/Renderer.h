@@ -2,7 +2,7 @@
 #define RENDERER_H
 
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions>
+#include <QOpenGLFunctions_3_3_Core>
 #include <QWidget>
 #include <QOpenGLWidget>
 #include <QOpenGLShaderProgram>
@@ -14,7 +14,7 @@ struct Point {
     float z;
 };
 
-class Renderer : public QOpenGLWidget, protected QOpenGLFunctions
+class Renderer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 {
 public:
     explicit Renderer(QWidget *parent = nullptr) : QOpenGLWidget(parent), cam(float(800)/float(600)) {};
@@ -24,11 +24,17 @@ protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
+    std::vector<GLfloat> arr;
+    std::vector<unsigned int> idx;
     Camera cam;
     GLuint m_posAttr;
     GLuint m_colAttr;
     GLuint m_normAttr;
     GLuint m_matrixUniform;
+    GLuint VAO;
+    GLuint VBO;
+    GLuint EBO;
+    int vertexCount = 0;
     QOpenGLShaderProgram *m_program;
 };
 
