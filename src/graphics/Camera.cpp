@@ -1,7 +1,8 @@
 #include <graphics/Camera.h>
 
 Camera::Camera(float aspectRatio) {
-    this->model.rotate(0.0f, 0.0f, 0.0f, 0.0f);
+    this->model.setToIdentity();
+    this->view.rotate(0.0f, 0.0f, 1.0f, 0.0f);
     this->view.translate(0, 0, -2);
     this->projection.perspective(60.0f, aspectRatio, 0.1f, 100.0f);
 }
