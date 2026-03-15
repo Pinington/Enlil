@@ -12,6 +12,7 @@
  - Choose wether to switch back to Make and gcc  
  - Document the code  
 
+ - make consts file with resolutions, FPS, etc...
 
  # TO SOLVE List
  - Should the Menu be with application or graphics  
