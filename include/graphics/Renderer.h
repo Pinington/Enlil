@@ -27,9 +27,6 @@ protected:
     std::vector<GLfloat> arr;
     std::vector<unsigned int> idx;
     Camera cam;
-    GLuint m_posAttr;
-    GLuint m_colAttr;
-    GLuint m_normAttr;
     GLuint m_matrixUniform;
     GLuint VAO;
     GLuint VBO;

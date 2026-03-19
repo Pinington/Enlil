@@ -14,9 +14,6 @@ void Renderer::initializeGL()
     m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/src/graphics/shaders/fragment.glsl");
     m_program->link();
     
-    m_posAttr = m_program->attributeLocation("posAttr");
-    m_colAttr = m_program->attributeLocation("colAttr");
-    m_normAttr = m_program->attributeLocation("normalAttr");
     m_matrixUniform = m_program->uniformLocation("matrix");
 
     glGenVertexArrays(1, &this->VAO);
@@ -29,14 +26,14 @@ void Renderer::initializeGL()
     Point center2 = {0.5f, 0.0f, -0.2f};
     drawSphere(center2, 0.3f);
 
-    glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)0);
-    glEnableVertexAttribArray(m_posAttr);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)0);
+    glEnableVertexAttribArray(0);
     
-    glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (3 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(m_colAttr);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (3 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(1);
     
-    glVertexAttribPointer(m_normAttr, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (6 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(m_normAttr);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (6 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(2);
 
     m_program->release();
 }
