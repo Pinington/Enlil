@@ -6,8 +6,6 @@
 #include <QWidget>
 #include <QOpenGLWidget>
 #include <QOpenGLShaderProgram>
-#include <QElapsedTimer>
-#include <QTimer>
 #include "graphics/Camera.h"
 
 struct Point {
@@ -31,8 +29,6 @@ protected:
     Camera cam;
     GLuint m_matrixUniform;
     GLuint VAO, VBO, EBO;
-    GLuint colorUniform;
-    QElapsedTimer tm;
     int vertexCount = 0;
     QOpenGLShaderProgram *m_program;
 };

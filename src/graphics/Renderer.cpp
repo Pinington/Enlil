@@ -1,17 +1,9 @@
 #include "graphics/Renderer.h"
 #include "graphics/Camera.h"
 
-Renderer::Renderer(QWidget *parent)
-    : QOpenGLWidget(parent),
-      cam(float(800) / float(600))
-{
-    QTimer* timer = new QTimer(this);
+Renderer::Renderer(QWidget *parent): QOpenGLWidget(parent),
+      cam(float(800) / float(600)) {}
 
-    connect(timer, &QTimer::timeout,
-            this, QOverload<>::of(&Renderer::update));
-
-    timer->start(16); // ~60 FPS
-}
 
 void Renderer::initializeGL()
 {
@@ -20,15 +12,13 @@ void Renderer::initializeGL()
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
     
-    cam = Camera(float(width()) / float(height()));
     m_program = new QOpenGLShaderProgram(this);
     m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/src/graphics/shaders/vertex.glsl");
     m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/src/graphics/shaders/fragment.glsl");
     m_program->link();
-    
+
     m_matrixUniform = m_program->uniformLocation("matrix");
-    colorUniform = m_program->uniformLocation("timeColor");
-    tm.start();
+    cam = Camera(float(width()) / float(height()));
 
     glGenVertexArrays(1, &this->VAO);
     glGenBuffers(1, &this->VBO);
@@ -64,10 +54,9 @@ void Renderer::paintGL()
     m_program->bind();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    m_program->setUniformValue(m_matrixUniform, cam.getMatrix());
-    float curr_time = tm.elapsed() / 1000.0f;
-    m_program->setUniformValue(colorUniform, QVector3D(0.5 + sin(curr_time) / 2, 0, 0));
 
+    m_program->setUniformValue(m_matrixUniform, cam.getMatrix());
+    
     glBindVertexArray(this->VAO);
     glDrawElements(GL_TRIANGLES, idx.size(), GL_UNSIGNED_INT, 0);
 
