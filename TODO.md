@@ -1,20 +1,24 @@
 # TO DO List
- - Make the renderer work display a sphere  
+Renderer:
+ - Instantiate spheres instead of a huge vbo
+ - Set an FPS
 
+Core:
  - Make particles move around with gravity in a semi-sphere platform  
- - Link a particle system to the renderer  
+ - Link a particle system to the renderer
 
- - Connect a GUI Menu to the renderer  
- 
- - Add a force that follows pressed pointer  
- - Add more platforms  
+ Physics:  
+ - Add forces that follow cursor
+ - Add platforms
 
- - Choose wether to switch back to Make and gcc  
+Menu:
+ - Connect a GUI Menu to the renderer
+
+Camera:
+ - Clean the camera movement up, make it more modular
+ - Deal with public camera speed
+ - See if we can make something cleaner than a setfocus and repaint
+
+Tidiness:
  - Document the code  
-
  - make consts file with resolutions, FPS, etc...
-
- # TO SOLVE List
- - Should the Menu be with application or graphics  
- - Do I render dt or full system everytime
- - VBO and VAO 
