@@ -158,7 +158,6 @@ void Renderer::instantiateSphere() {
     m_program->bind();
 
     GLint location = glGetUniformLocation(m_program->programId(), "offsets[0]");
-
     glUniform3fv(location, 4, offsets.data());
 }
 
