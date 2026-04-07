@@ -1,6 +1,7 @@
 # TO DO List
 Renderer:
- - Instantiate spheres instead of a huge vbo
+ - Clean the entire renderer.cpp code
+ - Instantiate on command without predefined values 
  - Set an FPS
  - Maybe make a mesh factory class
 
