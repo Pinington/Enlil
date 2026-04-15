@@ -1,9 +1,9 @@
 #include "graphics/Renderer.h"
 #include "graphics/Camera.h"
-#include <Qtimer>
+#include <QTimer>
 #include <string>
 #include <sstream>
-
+#include <QFile>
         
 Renderer::Renderer(QWidget *parent): QOpenGLWidget(parent), cam(float(800) / float(600)) {
     /* Constructor for regular FPS refresh
@@ -56,6 +56,9 @@ void Renderer::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_program->setUniformValue(m_matrixUniform, cam.getMatrix());
+
+    qDebug() << "matrix uniform:" << m_matrixUniform;
+    qDebug() << QFile(":/src/graphics/shaders/vertex.glsl").exists();
 
     glBindVertexArray(this->VAO);
     // glDrawElements(GL_TRIANGLES, idx.size(), GL_UNSIGNED_INT, 0);
