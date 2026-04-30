@@ -17,7 +17,7 @@ Renderer::Renderer(QWidget *parent): QOpenGLWidget(parent), cam(float(800) / flo
 void Renderer::initializeGL()
 {
     makeCurrent();  
-    this->setFocusPolicy(Qt::StrongFocus);
+    setFocusPolicy(Qt::StrongFocus);
     initializeOpenGLFunctions();
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
@@ -30,9 +30,9 @@ void Renderer::initializeGL()
     m_matrixUniform = m_program->uniformLocation("matrix");
     cam = Camera(float(width()) / float(height()));
 
-    glGenVertexArrays(1, &this->VAO);
-    glGenBuffers(1, &this->VBO);
-    glGenBuffers(1, &this->EBO);
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
 
     drawSphere(0.5f);
     instantiateSphere(0.f, 0.f, 0.f);
@@ -59,7 +59,7 @@ void Renderer::paintGL()
 
     glBindVertexArray(this->VAO);
     // glDrawElements(GL_TRIANGLES, idx.size(), GL_UNSIGNED_INT, 0);
-    glDrawElementsInstanced(GL_TRIANGLES, this->vertexCount, GL_UNSIGNED_INT, 0, this->sphereCount);
+    glDrawElementsInstanced(GL_TRIANGLES, vertexCount, GL_UNSIGNED_INT, 0, sphereCount);
 
     m_program->release();
 }
@@ -119,25 +119,25 @@ void Renderer::drawSphere(float radius) {
             addVertex(p2);
             addVertex(p3);
             
-            this->idx.push_back(c + 0);
-            this->idx.push_back(c + 1);
-            this->idx.push_back(c + 2);
+            idx.push_back(c + 0);
+            idx.push_back(c + 1);
+            idx.push_back(c + 2);
 
-            this->idx.push_back(c + 1);
-            this->idx.push_back(c + 2);
-            this->idx.push_back(c + 3);
+            idx.push_back(c + 1);
+            idx.push_back(c + 2);
+            idx.push_back(c + 3);
             c += 4;
         }
     }
 
-    this->vertexCount = idx.size();
+    vertexCount = idx.size();
 
-    glBindVertexArray(this->VAO);
+    glBindVertexArray(VAO);
 
-    glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * arr.size(), arr.data(), GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, idx.size() * sizeof(GLuint), idx.data(), GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)0);
@@ -152,10 +152,10 @@ void Renderer::drawSphere(float radius) {
 
 void Renderer::instantiateSphere(float x, float y, float z) {
     m_program->bind();
-    std::string offsetIdx = "offsets[" + std::to_string(this->sphereCount) + "]";
+    std::string offsetIdx = "offsets[" + std::to_string(sphereCount) + "]";
     GLint location = glGetUniformLocation(m_program->programId(), offsetIdx.c_str());
     glUniform3f(location, x, y ,z);
-    this->sphereCount++;    
+    sphereCount++;    
 }
 
 void Renderer::keyPressEvent(QKeyEvent *event) {

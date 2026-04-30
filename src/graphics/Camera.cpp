@@ -1,9 +1,9 @@
 #include <graphics/Camera.h>
 
 Camera::Camera(float aspectRatio) {
-    this->model.setToIdentity();
-    this->view.lookAt({3, 1, 3}, {0, 0, 0}, {0, 1, 0});
-    this->projection.perspective(60.0f, aspectRatio, 0.1f, 100.0f);
+    model.setToIdentity();
+    view.lookAt({3, 1, 3}, {0, 0, 0}, {0, 1, 0});
+    projection.perspective(60.0f, aspectRatio, 0.1f, 100.0f);
 }
 
 void Camera::chPerspective(float aspectRatio) {
@@ -12,13 +12,13 @@ void Camera::chPerspective(float aspectRatio) {
 }
 
 void Camera::rotate(float x, float y, float z, float deg) {
-    this->view.rotate(deg, x, y, z);
+    view.rotate(deg, x, y, z);
 }
 
 void Camera::move(float x, float y, float z) {
-    this->view.translate(x, y, z);
+    view.translate(x, y, z);
 }
 
 QMatrix4x4 Camera::getMatrix() {
-    return this->projection * this->view * this->model;
+    return projection * view * model;
 }
