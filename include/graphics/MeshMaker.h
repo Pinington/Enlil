@@ -24,7 +24,7 @@ public:
     int getvertexCount();
 
 private:
-    int vertexCount = 0;
+    int vertexCount { 0 };
     std::vector<float> arr;
     std::vector<unsigned int> idx;
 };
@@ -34,7 +34,7 @@ public:
     void initPlatform(float radius);
 
 private:
-    int vertexCount = 0;
+    int vertexCount { 0 };
     std::vector<float> arr;
     std::vector<unsigned int> idx;
 };

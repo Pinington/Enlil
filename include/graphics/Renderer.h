@@ -29,7 +29,7 @@ protected:
     GLuint VAO, VBO, offsetVBO, EBO;
 
     SphereMaker sm;
-    int sphereCount = 0;
+    int sphereCount { 0 };
 
     QOpenGLShaderProgram *m_program;
     virtual void keyPressEvent(QKeyEvent *event);
