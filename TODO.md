@@ -5,6 +5,11 @@ Renderer:
  - Set an FPS
  - Maybe make a mesh factory class
 
+Camera:
+ - Fix how we pass the MVP matrices
+ - Adapt renderer to make normals work at all scales for isntances
+ - Clean the camera movement up, make it more modular
+
 Core:
  - Make particles move around with gravity in a semi-sphere platform  
  - Link a particle system to the renderer
@@ -15,11 +20,6 @@ Core:
 
 Menu:
  - Connect a GUI Menu to the renderer
-
-Camera:
- - Clean the camera movement up, make it more modular
- - Deal with public camera speed
- - See if we can make something cleaner than a setfocus and repaint
 
 Tidiness:
  - Document the code  
