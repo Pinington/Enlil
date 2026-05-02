@@ -4,8 +4,7 @@
 #include <vector>
 #include <math.h>
 
-#define URES 32
-#define VRES 32
+#include "const.h"
 
 struct Point {
     float x;

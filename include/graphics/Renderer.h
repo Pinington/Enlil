@@ -7,10 +7,11 @@
 #include <QOpenGLWidget>
 #include <QOpenGLShaderProgram>
 #include <QKeyEvent>
+
 #include "graphics/Camera.h"
 #include "graphics/MeshMaker.h"
 
-#define MAX_SPHERES 64
+#include "const.h"
 
 class Renderer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 {
